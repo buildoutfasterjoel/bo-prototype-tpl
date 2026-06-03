@@ -37,7 +37,6 @@ Both are consumed by `bunfig.toml` to authenticate private registries.
 
 **Path aliases** (both work):
 - `#/` → `src/`
-- `@/` → `src/`
 
 **Server functions:** Use `createServerFn` from `@tanstack/start` to colocate server-side logic with routes. Nitro bundles a portable Node.js server into `dist/`.
 
@@ -96,6 +95,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 Use these skills when working in this prototype:
 - `/new-page` — scaffold a new route with Blueprint layout
-- `/blueprint` — get component guidance and usage examples
+- `/blueprint` — get component guidance and usage examples, use this always first for UI before doing custom elements.
 - `/icons` — find the right FontAwesome icon for a use case
 - `/prototype-review` — check consistency and branding before shipping

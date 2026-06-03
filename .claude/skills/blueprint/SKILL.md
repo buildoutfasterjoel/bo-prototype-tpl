@@ -74,37 +74,48 @@ Components import their icons inline (e.g., `import { faXmark } from '@fortaweso
 
 ## 5. Importing components
 
-Components use **subpath imports**, not a barrel:
+Components use **subpath imports**, not a barrel — one import per component family:
 
 ```tsx
 import { Button } from '@buildoutinc/blueprint-react/ui/Button';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardBody,
-  CardFooter,
-} from '@buildoutinc/blueprint-react/ui/Card';
+import { Card } from '@buildoutinc/blueprint-react/ui/Card';
+```
+
+**Dot notation (preferred).** Compound components expose their subparts as static properties on the root, so you import only the root and access subcomponents via dot notation:
+
+```tsx
+import { Card } from '@buildoutinc/blueprint-react/ui/Card';
+import { Button } from '@buildoutinc/blueprint-react/ui/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/pro-regular-svg-icons';
 
 export function AddItemCard() {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>New item</CardTitle>
-      </CardHeader>
-      <CardBody>Pick a name to get started.</CardBody>
-      <CardFooter>
+      <Card.Header>
+        <Card.Title>New item</Card.Title>
+      </Card.Header>
+      <Card.Body>Pick a name to get started.</Card.Body>
+      <Card.Footer>
         <Button variant="primary">
           <FontAwesomeIcon icon={faPlus} />
           Add item
         </Button>
-      </CardFooter>
+      </Card.Footer>
     </Card>
   );
 }
 ```
+
+The dotted name maps to the flat name by dropping the root prefix — `Card.Header` is `CardHeader`, `Card.Body` is `CardBody`, `Accordion.Item` is `AccordionItem`, `Tabs.List` is `TabsList`, and so on.
+
+**Flat named imports still work** and remain fully supported, so existing code does not need to change:
+
+```tsx
+import { Card, CardHeader, CardTitle, CardBody, CardFooter } from '@buildoutinc/blueprint-react/ui/Card';
+```
+
+Prefer dot notation for new code — it keeps import lines short and makes the component relationship explicit at the call site.
 
 ## 6. Available components
 
@@ -120,7 +131,7 @@ Bootstrap utility classes are **not prefixed** — use them as standard:
 
 ```tsx
 <Card className="mt-4 d-flex flex-column gap-3 rounded-3 shadow-sm">
-  <CardBody className="text-primary">Hello</CardBody>
+  <Card.Body className="text-primary">Hello</Card.Body>
 </Card>
 ```
 
@@ -141,7 +152,22 @@ Approach every UI task with a direction:
 
 Avoid the obvious AI defaults: Inter/Roboto everywhere, purple-gradient-on-white hero, three identical cards in a row, default heading sizes throughout. Avoid building custom button/input/card primitives when Blueprint already ships them.
 
-## 9. Common failure modes
+## 9. Typography utilities quick reference
+
+Blueprint extends Bootstrap's type scale with these size utilities:
+
+| Class | Size | Use for |
+|---|---|---|
+| `fs-large` | 16px | Section headings, card titles, emphasis labels |
+| *(default)* | 14px | Body text, table cells, form labels — **no class needed** |
+| `fs-small` | 12px | Secondary metadata, timestamps, helper text |
+| `fs-xs` | 10px | Badges, fine-print, tightest density |
+
+These map directly to Figma's font-size variables. **When Figma shows `14px`, that is the default body size — do not add `fs-small`.** Only add a size class when the design intentionally steps down (12px → `fs-small`, 10px → `fs-xs`) or up (16px → `fs-large`).
+
+Card and section header titles consistently use `fw-semibold fs-large`. Match that pattern for any `<span>` or `<p>` acting as a card section heading.
+
+## 10. Common failure modes
 
 - **Components render but have no styles** → the theme SCSS isn't imported, or the consuming app's build pipeline doesn't have a Sass compiler configured.
 - **`401 Unauthorized` from `npm install`** → missing `.npmrc`, or `GITHUB_TOKEN` not set / lacks `read:packages`.

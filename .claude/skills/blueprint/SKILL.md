@@ -1,6 +1,6 @@
 ---
 name: blueprint
-description: Install, configure, and build polished pages with the Buildout Blueprint design system (@buildoutinc/blueprint-theme + @buildoutinc/blueprint-react) in a consuming app outside this monorepo. Use when setting up registry auth, installing the packages, importing the theme SCSS, wiring FontAwesome Pro, choosing components, or composing pages/features that should look intentional and on-brand.
+description: Install, configure, and build polished pages with the Buildout Blueprint design system (@buildoutinc/blueprint-theme + @buildoutinc/blueprint-react) in a consuming app. Use when setting up registry auth, installing the packages, importing the theme SCSS, wiring FontAwesome Pro, choosing components, or composing pages/features that should look intentional and on-brand.
 ---
 
 This skill covers two things at once: (1) **integrating** the Blueprint design system (`@buildoutinc/blueprint-theme` + `@buildoutinc/blueprint-react`) into a consuming app outside this monorepo, and (2) **using** those primitives to build pages that look intentional rather than generic.

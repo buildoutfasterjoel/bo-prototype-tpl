@@ -1,44 +1,49 @@
-import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
-import { Alert } from '@buildoutinc/blueprint-react/ui/Alert'
-import { Button } from '@buildoutinc/blueprint-react/ui/Button'
-import { Card } from '@buildoutinc/blueprint-react/ui/Card'
-import { Input } from '@buildoutinc/blueprint-react/ui/Input'
-import { faLock } from '@fortawesome/pro-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
-import { getAuthSession, loginFn } from '#/lib/auth'
+/**
+ * IMPORTANT!
+ * If you do not need to update this file for any reason, leave it as-is.
+ * This file will get overriten by the bo-spark cli. To make sure that the login and others are working correctly,
+ */
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { Alert } from "@buildoutinc/blueprint-react/ui/Alert";
+import { Button } from "@buildoutinc/blueprint-react/ui/Button";
+import { Card } from "@buildoutinc/blueprint-react/ui/Card";
+import { Input } from "@buildoutinc/blueprint-react/ui/Input";
+import { faLock } from "@fortawesome/pro-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { getAuthSession, loginFn } from "#/lib/auth";
 
-export const Route = createFileRoute('/login')({
+export const Route = createFileRoute("/login")({
   beforeLoad: async () => {
-    const { authenticated } = await getAuthSession()
-    if (authenticated) throw redirect({ to: '/' })
+    const { authenticated } = await getAuthSession();
+    if (authenticated) throw redirect({ to: "/" });
   },
   component: LoginPage,
-})
+});
 
 function LoginPage() {
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
     try {
-      await loginFn({ data: { password } })
-      await router.navigate({ to: '/' })
+      await loginFn({ data: { password } });
+      await router.navigate({ to: "/" });
     } catch {
-      setError('Incorrect password. Please try again.')
+      setError("Incorrect password. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
-      <div style={{ width: '100%', maxWidth: 400 }} className="px-3">
+      <div style={{ width: "100%", maxWidth: 400 }} className="px-3">
         <Card className="shadow">
           <Card.Body className="p-4">
             <div className="text-center mb-4">
@@ -80,12 +85,12 @@ function LoginPage() {
                 className="w-100"
                 disabled={loading || !password}
               >
-                {loading ? 'Verifying…' : 'Continue'}
+                {loading ? "Verifying…" : "Continue"}
               </Button>
             </form>
           </Card.Body>
         </Card>
       </div>
     </div>
-  )
+  );
 }

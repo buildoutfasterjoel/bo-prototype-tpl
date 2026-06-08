@@ -1,4 +1,14 @@
-import { HeadContent, Scripts, createRootRoute, redirect } from "@tanstack/react-router";
+/**
+ * IMPORTANT!
+ * If you do not need to update this file for any reason, leave it as-is.
+ * This file will get overriten by the bo-spark cli. To make sure that the login and others are working correctly,
+ */
+import {
+  HeadContent,
+  Scripts,
+  createRootRoute,
+  redirect,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
